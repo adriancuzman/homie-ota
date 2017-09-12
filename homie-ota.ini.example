@@ -13,6 +13,7 @@ OTA_FIRMWARE_ROOT	= ./firmwares
 [mqtt]
 MQTT_HOST		= localhost
 # MQTT_CAFILE		= /path/to/ca.crt
+# MQTT_TLS_VERSION        = ssl.PROTOCOL_TLSv1_1
 MQTT_PORT		= 1883
 MQTT_USERNAME		= John
 MQTT_PASSWORD		= secret

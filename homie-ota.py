@@ -22,7 +22,7 @@ import fileinput
 import time
 import re
 import base64
-
+import ssl
 
 # Script name (without extension) used for config/logfile names
 APPNAME = os.path.splitext(os.path.basename(__file__))[0]
@@ -76,6 +76,10 @@ except:
     pass
 try:
     MQTT_CAFILE = config.get("mqtt", "MQTT_CAFILE")
+except:
+    pass
+try:
+    MQTT_TLS_VERSION = config.get("mqtt", "MQTT_TLS_VERSION")
 except:
     pass
 MQTT_SENSOR_PREFIX = config.get("mqtt", "MQTT_SENSOR_PREFIX")
@@ -606,7 +610,11 @@ if __name__ == '__main__':
     # mqttc.on_log = on_log
 
     if MQTT_CAFILE:
-        mqttc.tls_set(MQTT_CAFILE)
+#        mqttc.tls_set(MQTT_CAFILE)
+	mqttc.tls_set(MQTT_CAFILE,
+               None,
+               None, cert_reqs=ssl.CERT_REQUIRED, tls_version=eval(MQTT_TLS_VERSION), ciphers=None)
+
 
     if MQTT_USERNAME:
         mqttc.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
